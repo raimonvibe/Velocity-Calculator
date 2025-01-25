@@ -130,16 +130,20 @@ function calculate(tabId) {
         t = inputs.t ? getInputValue(...inputs.t) : 0;
     }
 
-    // Perform calculation
     if (tabId === "finalVelocity") {
         result = calculations.finalVelocity(v0, a, t);
+        updateOutput(inputs.outputUnitId, result, outputUnit, ["m/s", "km/h", "ft/s"]);
     } else if (tabId === "initialVelocity") {
         result = calculations.initialVelocity(vt, a, t);
+        updateOutput(inputs.outputUnitId, result, outputUnit, ["m/s", "km/h", "ft/s"]);
     } else if (tabId === "acceleration") {
         result = calculations.acceleration(vt, v0, t);
+        updateOutput(inputs.outputUnitId, result, outputUnit, ["m/s²", "g"]);
     } else if (tabId === "time") {
         result = calculations.time(vt, v0, a);
+        updateOutput(inputs.outputUnitId, result, outputUnit, ["seconds", "minutes", "hours"]);
     }
+
 
     // Convert result to the selected unit
     const outputUnitId = inputs.outputUnitId;
