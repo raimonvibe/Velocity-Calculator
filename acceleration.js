@@ -53,38 +53,13 @@ function getInputValue(inputId, unitId, type) {
     return convertToBase(value, unit, type);
 }
 
-function updateOutput(outputId, result, unit, options = []) {
+// Update the output on the tab
+function updateOutput(outputId, result, unit) {
     const outputElement = document.getElementById(outputId);
     if (outputElement) {
-        // Update or create the result span
-        let resultSpan = outputElement.querySelector(".result-value");
-        if (!resultSpan) {
-            resultSpan = document.createElement("span");
-            resultSpan.className = "result-value";
-            outputElement.insertBefore(resultSpan, outputElement.firstChild);
-        }
-        resultSpan.textContent = `${result.toFixed(4)} `;
-
-        // Update or create the dropdown
-        let unitDropdown = outputElement.querySelector("select");
-        if (!unitDropdown) {
-            unitDropdown = document.createElement("select");
-            unitDropdown.className = "unit-select";
-            outputElement.appendChild(unitDropdown);
-        }
-
-        // Populate the dropdown with the correct options
-        unitDropdown.innerHTML = ""; // Clear previous options
-        options.forEach(option => {
-            const opt = document.createElement("option");
-            opt.value = option;
-            opt.textContent = option;
-            if (option === unit) opt.selected = true;
-            unitDropdown.appendChild(opt);
-        });
+        outputElement.textContent = `${result.toFixed(4)} ${unit}`;
     }
 }
-
 
 // Perform calculation for a specific tab
 function calculate(tabId) {
@@ -130,20 +105,16 @@ function calculate(tabId) {
         t = inputs.t ? getInputValue(...inputs.t) : 0;
     }
 
+    // Perform calculation
     if (tabId === "finalVelocity") {
         result = calculations.finalVelocity(v0, a, t);
-        updateOutput(inputs.outputUnitId, result, outputUnit, ["m/s", "km/h", "ft/s"]);
     } else if (tabId === "initialVelocity") {
         result = calculations.initialVelocity(vt, a, t);
-        updateOutput(inputs.outputUnitId, result, outputUnit, ["m/s", "km/h", "ft/s"]);
     } else if (tabId === "acceleration") {
         result = calculations.acceleration(vt, v0, t);
-        updateOutput(inputs.outputUnitId, result, outputUnit, ["m/s²", "g"]);
     } else if (tabId === "time") {
         result = calculations.time(vt, v0, a);
-        updateOutput(inputs.outputUnitId, result, outputUnit, ["seconds", "minutes", "hours"]);
     }
-
 
     // Convert result to the selected unit
     const outputUnitId = inputs.outputUnitId;
