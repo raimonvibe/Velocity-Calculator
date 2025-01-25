@@ -1,0 +1,206 @@
+/* styles.css */
+
+body {
+  background: linear-gradient(135deg, #03060c, #020202, #1a1a2e, #16213e, #0f3460); /* Complex gradient with dark and lighter blues */
+  color: #f2fafc; /* Light text color */
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 20px;
+  position: relative; /* Position for the pseudo-element */
+}
+
+/* Grid effect */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) 0.5px, /* Smaller grid line */
+    transparent 0.5px,
+    transparent 10px /* Smaller spacing */
+  ),
+  repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) 0.5px, /* Smaller grid line */
+    transparent 0.5px,
+    transparent 10px /* Smaller spacing */
+  );
+  pointer-events: none; /* Allow clicks to pass through */
+}
+
+.container {
+  z-index: 1; /* Breng de container boven het grid */
+  position: relative; /* Zorg ervoor dat pseudo-elementen alleen buiten de container gelden */
+  overflow: hidden; /* Verbergt overlappende grids of inhoud */
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #020202, #031437); /* Darker gradient for container */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.9); /* Stronger shadow for depth */
+}
+
+h1, h2 {
+  color: #f2fafc; /* Light color for headings */
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background-color: #375CAD; /* Tab background color */
+  color: #f2fafc; /* Light text color */
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1; /* Allow buttons to take equal space */
+  margin: 5px; /* Add some margin for spacing */
+  transition: background 0.3s;
+}
+
+.tab-button.active {
+  background-color: #054186; /* Active tab color */
+}
+
+.tab-button:hover {
+  background-color: #054186; /* Darker blue on hover */
+}
+
+.tab-content {
+  display: none; /* Hide all tab content by default */
+  color: #f2fafc; /* Light text color */
+}
+
+.tab-content.active {
+  display: block; /* Show active tab content */
+}
+
+input {
+  width: calc(100% - 20px); /* Full width minus padding */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #375CAD; /* Border color */
+  background-color: #031437; /* Input background color */
+  color: #f2fafc; /* Input text color */
+}
+
+input::placeholder {
+  color: #f2fafc; /* Placeholder text color */
+}
+
+input:focus {
+  border-color: #054186; /* Darker blue on focus */
+  outline: none; /* Remove default outline */
+}
+
+button {
+  background: linear-gradient(135deg, #375CAD, #054186); /* Gradient button */
+  color: #f2fafc; /* Light text */
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #054186, #031437); /* Darker gradient on hover */
+}
+
+.output-container {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center the output box */
+  margin-top: 10px;
+}
+
+.output-box {
+  background: linear-gradient(135deg, #031437, #375CAD); /* Gradient for output */
+  color: #f2fafc; /* Light color for output text */
+  font-weight: bold;
+  font-size: 1.5em; /* Default size for output text */
+  padding: 10px; /* Padding for better appearance */
+  border-radius: 5px;
+  text-align: center;
+  flex: 1;
+  margin-right: 10px; /* Space between output box and dropdown */
+  position: relative; /* For glow effect */
+  overflow: hidden; /* Ensure the glow doesn't overflow */
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.8); /* Orange-yellow glow effect */
+}
+
+.unit-select {
+  margin-left: 10px; /* Space between text and dropdown */
+  padding: 10px;
+  border-radius: 5px;
+  border: none; /* Remove border */
+  background: linear-gradient(135deg, #031437, #375CAD); /* Gradient background */
+  color: #ffffff; /* White text color */
+  cursor: pointer;
+  font-size: 1.5em; /* Match font size with output */
+  appearance: none; /* Remove default dropdown styles */
+}
+
+.unit-select option {
+  background: linear-gradient(135deg, #031437, #375CAD); /* Gradient background for options */
+  color: #ffffff; /* White text color for options */
+  padding: 10px; /* Add padding for options */
+  border: none; /* Remove border */
+}
+
+.unit-select:focus {
+  background: linear-gradient(135deg, #375CAD, #031437); /* Reverse gradient for focus */
+  outline: none; /* Remove default focus outline */
+}
+
+.unit-select:hover {
+  background: #031437; /* Gradient background for hover */
+  color: #ffffff; /* Ensure text stays white */
+}
+
+
+/* Media query for smaller devices */
+@media (max-width: 600px) {
+  .tabs {
+      flex-direction: column; /* Stack tabs vertically on small screens */
+  }
+
+  .tab-button {
+      width: 100%; /* Make buttons full width */
+      margin: 5px 0; /* Adjust margin for vertical stacking */
+  }
+
+  h1 {
+      font-size: 1.5em; /* Smaller heading size */
+  }
+
+  h2 {
+      font-size: 1.2em; /* Smaller subheading size */
+  }
+
+  label, input, button, .output-box {
+      font-size: 0.9em; /* Smaller text size for inputs and buttons */
+  }
+
+  .output-box {
+      font-size: 1.2em; /* Smaller text size for output box */
+  }
+
+  .unit-select {
+      font-size: 0.9em; /* Smaller text size for dropdown */
+  }
+}

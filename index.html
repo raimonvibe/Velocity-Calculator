@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity Calculator</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Velocity Calculator</h1>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'finalVelocity')">Final Velocity</button>
+            <button class="tab-button" onclick="openTab(event, 'initialVelocity')">Initial Velocity</button>
+            <button class="tab-button" onclick="openTab(event, 'acceleration')">Acceleration</button>
+            <button class="tab-button" onclick="openTab(event, 'time')">Time</button>
+        </div>
+
+<div id="finalVelocity" class="tab-content active">
+    <div class="row">
+        <div class="label-column">
+            <label for="initialVelocityInput">Initial Velocity (v₀):</label>
+            <label for="accelerationInput">Acceleration (a):</label>
+            <label for="timeInput">Time (t):</label>
+        </div>
+        <div class="input-column">
+            <input type="number" id="initialVelocityInput" placeholder="Enter initial velocity">
+            <select id="initialVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+            <input type="number" id="accelerationInput" placeholder="Enter acceleration">
+            <select id="accelerationUnit" class="unit-select">
+                <option value="m/s²">m/s²</option>
+                <option value="cm/s²">cm/s²</option>
+                <option value="km/s²">km/s²</option>
+                <option value="ft/s²">ft/s²</option>
+                <option value="mi/s²">mi/s²</option>
+                <option value="g">g</option>
+            </select>
+            <input type="number" id="timeInput" placeholder="Enter time">
+            <select id="timeUnit" class="unit-select">
+                <option value="seconds">seconds</option>
+                <option value="minutes">minutes</option>
+                <option value="hours">hours</option>
+            </select>
+        </div>
+    </div>
+    <button id="calculateFinalVelocityButton">Calculate Final Velocity</button>
+    <h2>Final Velocity (vₜ):</h2>
+    <div class="output-container">
+        <div id="finalVelocityOutputBox" class="output-box">
+            <span id="finalVelocityOutput">0.0000</span>
+            <select id="finalVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div id="initialVelocity" class="tab-content">
+    <div class="row">
+        <div class="label-column">
+            <label for="finalVelocityInput">Final Velocity (vₜ):</label>
+            <label for="accelerationInput">Acceleration (a):</label>
+            <label for="timeInput">Time (t):</label>
+        </div>
+        <div class="input-column">
+            <input type="number" id="finalVelocityInput" placeholder="Enter final velocity">
+            <select id="finalVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+            <input type="number" id="accelerationInput" placeholder="Enter acceleration">
+            <select id="accelerationUnit" class="unit-select">
+                <option value="m/s²">m/s²</option>
+                <option value="cm/s²">cm/s²</option>
+                <option value="km/s²">km/s²</option>
+                <option value="ft/s²">ft/s²</option>
+                <option value="mi/s²">mi/s²</option>
+                <option value="g">g</option>
+            </select>
+            <input type="number" id="timeInput" placeholder="Enter time">
+            <select id="timeUnit" class="unit-select">
+                <option value="seconds">seconds</option>
+                <option value="minutes">minutes</option>
+                <option value="hours">hours</option>
+            </select>
+        </div>
+    </div>
+    <button id="calculateInitialVelocityButton">Calculate Initial Velocity</button>
+    <h2>Initial Velocity (v₀):</h2>
+    <div class="output-container">
+        <div id="initialVelocityOutputBox" class="output-box">
+            <span id="initialVelocityOutput">0.0000</span>
+            <select id="initialVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div id="acceleration" class="tab-content">
+    <div class="row">
+        <div class="label-column">
+            <label for="finalVelocityInput">Final Velocity (vₜ):</label>
+            <label for="initialVelocityInput">Initial Velocity (v₀):</label>
+            <label for="timeInput">Time (t):</label>
+        </div>
+        <div class="input-column">
+            <input type="number" id="finalVelocityInput" placeholder="Enter final velocity">
+            <select id="finalVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+            <input type="number" id="initialVelocityInput" placeholder="Enter initial velocity">
+            <select id="initialVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+            <input type="number" id="timeInput" placeholder="Enter time">
+            <select id="timeUnit" class="unit-select">
+                <option value="seconds">seconds</option>
+                <option value="minutes">minutes</option>
+                <option value="hours">hours</option>
+            </select>
+        </div>
+    </div>
+    <button id="calculateAccelerationButton">Calculate Acceleration</button>
+    <h2>Acceleration (a):</h2>
+    <div class="output-container">
+        <div id="accelerationOutputBox" class="output-box">
+            <span id="accelerationOutput">0.0000</span>
+            <select id="accelerationUnit" class="unit-select">
+                <option value="m/s²">m/s²</option>
+                <option value="cm/s²">cm/s²</option>
+                <option value="km/s²">km/s²</option>
+                <option value="ft/s²">ft/s²</option>
+                <option value="mi/s²">mi/s²</option>
+                <option value="g">g</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div id="time" class="tab-content">
+    <div class="row">
+        <div class="label-column">
+            <label for="finalVelocityInput">Final Velocity (vₜ):</label>
+            <label for="initialVelocityInput">Initial Velocity (v₀):</label>
+            <label for="accelerationInput">Acceleration (a):</label>
+        </div>
+        <div class="input-column">
+            <input type="number" id="finalVelocityInput" placeholder="Enter final velocity">
+            <select id="finalVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+            <input type="number" id="initialVelocityInput" placeholder="Enter initial velocity">
+            <select id="initialVelocityUnit" class="unit-select">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="ft/s">ft/s</option>
+                <option value="mph">mph</option>
+                <option value="knots">knots</option>
+                <option value="cm/s">cm/s</option>
+            </select>
+            <input type="number" id="accelerationInput" placeholder="Enter acceleration">
+            <select id="accelerationUnit" class="unit-select">
+                <option value="m/s²">m/s²</option>
+                <option value="cm/s²">cm/s²</option>
+                <option value="km/s²">km/s²</option>
+                <option value="ft/s²">ft/s²</option>
+                <option value="mi/s²">mi/s²</option>
+                <option value="g">g</option>
+            </select>
+        </div>
+    </div>
+    <button id="calculateTimeButton">Calculate Time</button>
+    <h2>Time (t):</h2>
+    <div class="output-container">
+        <div id="timeOutputBox" class="output-box">
+            <span id="timeOutput">0.0000</span>
+            <select id="timeUnit" class="unit-select">
+                <option value="seconds">seconds</option>
+                <option value="minutes">minutes</option>
+                <option value="hours">hours</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+    <script src="acceleration.js"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>
