@@ -53,25 +53,35 @@ function getInputValue(inputId, unitId, type) {
     return convertToBase(value, unit, type);
 }
 
-function updateOutput(outputId, result, unit) {
+function updateOutput(outputId, result, unit, options = []) {
     const outputElement = document.getElementById(outputId);
     if (outputElement) {
-        // Find or create a span for the numerical result
+        // Update or create the result span
         let resultSpan = outputElement.querySelector(".result-value");
         if (!resultSpan) {
             resultSpan = document.createElement("span");
             resultSpan.className = "result-value";
-            outputElement.insertBefore(resultSpan, outputElement.firstChild); // Insert at the start
+            outputElement.insertBefore(resultSpan, outputElement.firstChild);
         }
-
-        // Update only the result value
         resultSpan.textContent = `${result.toFixed(4)} `;
 
-        // Ensure the dropdown remains intact
-        const unitDropdown = outputElement.querySelector("select");
-        if (unitDropdown) {
-            unitDropdown.value = unit; // Set dropdown to the current unit
+        // Update or create the dropdown
+        let unitDropdown = outputElement.querySelector("select");
+        if (!unitDropdown) {
+            unitDropdown = document.createElement("select");
+            unitDropdown.className = "unit-select";
+            outputElement.appendChild(unitDropdown);
         }
+
+        // Populate the dropdown with the correct options
+        unitDropdown.innerHTML = ""; // Clear previous options
+        options.forEach(option => {
+            const opt = document.createElement("option");
+            opt.value = option;
+            opt.textContent = option;
+            if (option === unit) opt.selected = true;
+            unitDropdown.appendChild(opt);
+        });
     }
 }
 
