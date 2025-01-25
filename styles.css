@@ -127,11 +127,14 @@ button:hover {
 .output-container {
   display: flex;
   align-items: center; /* Align items vertically */
-  justify-content: center; /* Center the output box */
+  justify-content: space-between; /* Add spacing between output and dropdown */
+  gap: 10px; /* Ensure consistent spacing between children */
   margin-top: 10px;
 }
 
 .output-box {
+  flex-grow: 1; /* Allow the box to take up remaining space */
+  max-width: calc(100% - 120px); /* Prevent overflow when dropdown is present */
   background: linear-gradient(135deg, #031437, #375CAD); /* Gradient for output */
   color: #f2fafc; /* Light color for output text */
   font-weight: bold;
@@ -147,8 +150,10 @@ button:hover {
 }
 
 .unit-select {
+  flex-shrink: 0; /* Prevent the dropdown from resizing */
+  font-size: 1.2em; /* Reduce font size slightly for better alignment */
+  padding: 8px; /* Adjust padding for consistency */
   margin-left: 10px; /* Space between text and dropdown */
-  padding: 10px;
   border-radius: 5px;
   border: none; /* Remove border */
   background: linear-gradient(135deg, #031437, #375CAD); /* Gradient background */
@@ -199,11 +204,20 @@ button:hover {
       font-size: 0.9em; /* Smaller text size for inputs and buttons */
   }
 
+
+  .output-container {
+    flex-direction: column; /* Stack the output box and dropdown vertically */
+    align-items: stretch; /* Stretch items to fit container width */
+  }
+
   .output-box {
-      font-size: 1.2em; /* Smaller text size for output box */
+    max-width: 100%; /* Allow full width on smaller screens */
+    font-size: 1.2em; /* Reduce size slightly for smaller screens */
   }
 
   .unit-select {
-      font-size: 0.9em; /* Smaller text size for dropdown */
+    font-size: 1em; /* Adjust font size for better readability */
+    margin-left: 0; /* Remove margin when stacked */
   }
 }
+
