@@ -53,13 +53,28 @@ function getInputValue(inputId, unitId, type) {
     return convertToBase(value, unit, type);
 }
 
-// Update the output on the tab
 function updateOutput(outputId, result, unit) {
     const outputElement = document.getElementById(outputId);
     if (outputElement) {
-        outputElement.textContent = `${result.toFixed(4)} ${unit}`;
+        // Find or create a span for the numerical result
+        let resultSpan = outputElement.querySelector(".result-value");
+        if (!resultSpan) {
+            resultSpan = document.createElement("span");
+            resultSpan.className = "result-value";
+            outputElement.insertBefore(resultSpan, outputElement.firstChild); // Insert at the start
+        }
+
+        // Update only the result value
+        resultSpan.textContent = `${result.toFixed(4)} `;
+
+        // Ensure the dropdown remains intact
+        const unitDropdown = outputElement.querySelector("select");
+        if (unitDropdown) {
+            unitDropdown.value = unit; // Set dropdown to the current unit
+        }
     }
 }
+
 
 // Perform calculation for a specific tab
 function calculate(tabId) {
