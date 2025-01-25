@@ -50,7 +50,7 @@ Let’s improve this tool together! 🙌
 ## 📧 Contact
 For questions or feedback, feel free to reach out:
 - **Email**: [info@raimonvibe.com](mailto:info@raimonvibe.com)
-- **GitHub**: [raimonvibe](https://github.com/raimonvibe)
+- **Website**: [raimonvibe](https://www.raimonvibe.com/)
 
 ---
 
