@@ -78,13 +78,16 @@ h1, h2 {
 }
 
 .tab-content {
-  display: none; /* Hide all tab content by default */
-  color: #f2fafc; /* Light text color */
+    display: none; /* Ensure all tab content is hidden by default */
+    opacity: 0; /* Add fade effect for smoother transitions */
+    transition: opacity 0.3s ease; /* Smooth transition */
 }
 
 .tab-content.active {
-  display: block; /* Show active tab content */
+    display: block; /* Show active tab */
+    opacity: 1; /* Fade in */
 }
+
 
 input {
   width: calc(100% - 20px); /* Full width minus padding */
