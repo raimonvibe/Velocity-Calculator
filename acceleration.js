@@ -42,7 +42,7 @@ function convertFromBase(value, unit, type) {
     return value * (unitConversions[type][unit] || 1);
 }
 
-// Get input value and convert to base units
+// Get and convert input value
 function getInputValue(inputId, unitId, type) {
     const inputElement = document.getElementById(inputId);
     const unitElement = document.getElementById(unitId);
@@ -53,7 +53,7 @@ function getInputValue(inputId, unitId, type) {
     return convertToBase(value, unit, type);
 }
 
-// Update the output on the tab
+// Update the displayed output
 function updateOutput(outputId, result, unit) {
     const outputElement = document.getElementById(outputId);
     if (outputElement) {
@@ -65,34 +65,34 @@ function updateOutput(outputId, result, unit) {
 function calculate(tabId) {
     let v0 = 0, vt = 0, a = 0, t = 0, result;
 
-    // Map tab IDs to input fields and output units
+    // Map tab IDs to input fields and output
     const inputMap = {
         finalVelocity: {
             v0: ["initialVelocityFV", "initialVelocityUnitFV", "velocity"],
             a: ["accelerationFV", "accelerationUnitFV", "acceleration"],
             t: ["timeFV", "timeUnitFV", "time"],
-            outputUnitId: "finalVelocityOutput",
+            outputId: "finalVelocityOutput",
             type: "velocity",
         },
         initialVelocity: {
             vt: ["finalVelocityIV", "finalVelocityUnitIV", "velocity"],
             a: ["accelerationIV", "accelerationUnitIV", "acceleration"],
             t: ["timeIV", "timeUnitIV", "time"],
-            outputUnitId: "initialVelocityOutput",
+            outputId: "initialVelocityOutput",
             type: "velocity",
         },
         acceleration: {
             vt: ["finalVelocityAcc", "finalVelocityUnitAcc", "velocity"],
             v0: ["initialVelocityAcc", "initialVelocityUnitAcc", "velocity"],
             t: ["timeAcc", "timeUnitAcc", "time"],
-            outputUnitId: "accelerationOutput",
+            outputId: "accelerationOutput",
             type: "acceleration",
         },
         time: {
             vt: ["finalVelocityTime", "finalVelocityUnitTime", "velocity"],
             v0: ["initialVelocityTime", "initialVelocityUnitTime", "velocity"],
             a: ["accelerationTime", "accelerationUnitTime", "acceleration"],
-            outputUnitId: "timeOutput",
+            outputId: "timeOutput",
             type: "time",
         },
     };
@@ -106,49 +106,84 @@ function calculate(tabId) {
     }
 
     // Perform calculation
-    if (tabId === "finalVelocity") {
-        result = calculations.finalVelocity(v0, a, t);
-    } else if (tabId === "initialVelocity") {
-        result = calculations.initialVelocity(vt, a, t);
-    } else if (tabId === "acceleration") {
-        result = calculations.acceleration(vt, v0, t);
-    } else if (tabId === "time") {
-        result = calculations.time(vt, v0, a);
+    switch (tabId) {
+        case "finalVelocity":
+            result = calculations.finalVelocity(v0, a, t);
+            break;
+        case "initialVelocity":
+            result = calculations.initialVelocity(vt, a, t);
+            break;
+        case "acceleration":
+            result = calculations.acceleration(vt, v0, t);
+            break;
+        case "time":
+            result = calculations.time(vt, v0, a);
+            break;
+        default:
+            return;
     }
 
-    // Convert result to the selected unit
-    const outputUnitId = inputs.outputUnitId;
-    const outputUnit = document.getElementById(outputUnitId)?.value || Object.keys(unitConversions[inputs.type])[0];
-    result = convertFromBase(result, outputUnit, inputs.type);
-
     // Update output
-    updateOutput(outputUnitId, result, outputUnit);
+    const outputUnit = document.getElementById(inputs.outputId).dataset.unit || Object.keys(unitConversions[inputs.type])[0];
+    result = convertFromBase(result, outputUnit, inputs.type);
+    updateOutput(inputs.outputId, result, outputUnit);
 }
 
-// Tab switching function
+// Tab switching functionality
 function openTab(evt, tabName) {
-    // Deactivate all tabs and buttons
+    // Hide all tab contents
     document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+    // Remove active class from all buttons
     document.querySelectorAll(".tab-button").forEach(button => button.classList.remove("active"));
 
-    // Activate the selected tab and button
+    // Show the selected tab content and mark the button as active
     const activeTab = document.getElementById(tabName);
     if (activeTab) activeTab.classList.add("active");
     evt.currentTarget.classList.add("active");
 }
 
-// Event listeners for calculate buttons
-document.querySelectorAll(".tab-content button").forEach(button => {
-    button.addEventListener("click", () => {
-        const tabId = button.closest(".tab-content").id;
-        calculate(tabId);
-    });
-});
+// Populate dropdowns for units
+function populateDropdowns() {
+    const dropdowns = {
+        finalVelocityUnitFV: "velocity",
+        accelerationUnitFV: "acceleration",
+        timeUnitFV: "time",
+        finalVelocityUnitIV: "velocity",
+        accelerationUnitIV: "acceleration",
+        timeUnitIV: "time",
+        finalVelocityUnitAcc: "velocity",
+        initialVelocityUnitAcc: "velocity",
+        timeUnitAcc: "time",
+        finalVelocityUnitTime: "velocity",
+        initialVelocityUnitTime: "velocity",
+        accelerationUnitTime: "acceleration",
+    };
 
-// Event listeners for unit dropdown changes
-document.querySelectorAll(".unit-select").forEach(select => {
-    select.addEventListener("change", () => {
-        const tabId = select.closest(".tab-content").id;
-        calculate(tabId);
+    Object.entries(dropdowns).forEach(([dropdownId, type]) => {
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.innerHTML = Object.keys(unitConversions[type])
+            .map(unit => `<option value="${unit}">${unit}</option>`)
+            .join("");
+    });
+}
+
+// Add event listeners
+document.addEventListener("DOMContentLoaded", () => {
+    populateDropdowns();
+
+    // Add event listeners for calculate buttons
+    document.querySelectorAll(".tab-content button").forEach(button => {
+        button.addEventListener("click", () => {
+            const tabId = button.closest(".tab-content").id;
+            calculate(tabId);
+        });
+    });
+
+    // Update calculation on dropdown change
+    document.querySelectorAll(".unit-select").forEach(select => {
+        select.addEventListener("change", () => {
+            const tabId = select.closest(".tab-content").id;
+            calculate(tabId);
+        });
     });
 });
