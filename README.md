@@ -1,6 +1,6 @@
 # Velocity Calculator ⚡️
 
-![Physics Banner](psysics.png)
+![Physics Banner](physics.png)
 
 [🚀 **Live Demo Here!**](https://raimonvibe.github.io/Velocity-Calculator/)
 
